@@ -28,7 +28,6 @@ pipeline {
       steps {
         // git clone the Helm Chart repository
         script {
-          withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
           sh 'ls -l'
           sh "sed -i 's/tag: \"\"/tag: \"$IMAGE_TAG\"/g' values_$REPO_NAME.yaml"
           sh "sed -i -r 's|tag: \"v.1.0.0\"|tag: \"$IMAGE_TAG\"|' development/values_$REPO_NAME.yaml"
@@ -36,7 +35,9 @@ pipeline {
           sh "git config --global user.email 'budiprihantono90@gmail.com'"
           sh "git add ."
           sh "git commit -m "updated the values file""
-          sh "git push origin HEAD:main"
+          withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')])
+                            {
+          sh "git push origin HEAD:origin"
           }
         }
       }
