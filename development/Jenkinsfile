@@ -16,6 +16,9 @@ pipeline {
   }
   stages {
     stage('Clone Helm Chart') {
+      agent {
+        label 'homelab'
+      }
       steps {
         // git clone
         script {
@@ -25,6 +28,9 @@ pipeline {
       }
     }
     stage('Modify Helms Value') {
+      agent {
+        label 'homelab'
+      }
       steps {
         // git clone the Helm Chart repository
         script {
