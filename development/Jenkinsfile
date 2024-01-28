@@ -25,7 +25,7 @@ pipeline {
           git credentialsId: 'github', branch: "origin", url: 'https://github.com/budiprihantono/k8s_helm_chart.git'
           dir ('development') {
             sh 'ls -l'
-            sh "sed -i -r 's|tag: v.1.0.0|tag: $IMAGE_TAG|' development/values_$REPO_NAME.yaml"
+            sh "sed -i -r 's|tag: v.1.0.0|tag: $IMAGE_TAG|' development/values-$REPO_NAME.yaml"
             sh "git config --global user.name 'Budi Prihantono'"
             sh "git config --global user.email 'budiprihantono90@gmail.com'"
             sh "git add ."
