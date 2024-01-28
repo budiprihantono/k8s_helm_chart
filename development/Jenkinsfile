@@ -21,6 +21,13 @@ pipeline {
         script {
           git credentialsId: 'github', branch: "main", url: 'https://github.com/budiprihantono/k8s_helm_chart.git'
           sh 'ls -l'
+        }
+      }
+    }
+    stage('Modify Helms Value') {
+      steps {
+        // git clone the Helm Chart repository
+        script {
           dir ('development') {
           sh "printenv | sort"
           sh "ls -l"
@@ -30,31 +37,13 @@ pipeline {
           sh "git config --global user.email 'budiprihantono90@gmail.com'"
           sh "git add ."
           sh "git commit -m "updated the values file""
+          withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')])
+                            {
           sh "git push origin HEAD:origin"
+            }
+          }
         }
       }
-    }
-    // stage('Modify Helms Value') {
-    //   steps {
-    //     // git clone the Helm Chart repository
-    //     script {
-    //       dir ('development') {
-    //       sh "printenv | sort"
-    //       sh "ls -l"
-    //       sh "sed -i 's/tag: \"\"/tag: \"$IMAGE_TAG\"/g' values_$REPO_NAME.yaml"
-    //       sh "sed -i -r 's|tag: \"v.1.0.0\"|tag: \"$IMAGE_TAG\"|' development/values_$REPO_NAME.yaml"
-    //       sh "git config --global user.name 'Budi Prihantono'"
-    //       sh "git config --global user.email 'budiprihantono90@gmail.com'"
-    //       sh "git add ."
-    //       sh "git commit -m "updated the values file""
-    //       withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')])
-    //                         {
-    //       sh "git push origin HEAD:origin"
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
     }
   }
 }
