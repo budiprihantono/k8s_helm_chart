@@ -1,27 +1,27 @@
-# Default v.ac633b8f83
+# Default values for kubernetes.
 # This is a YAML-formatted file.
-# Declare v.ac633b8f83
+# Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
   repository: 183529306899.dkr.ecr.ap-southeast-3.amazonaws.com/golang-hello-world
   pullPolicy: IfNotPresent
-  # Ov.ac633b8f83
-  tag: "v.ac633b8f83
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "v.84238b06e1"
 
 imagePullSecrets: []
-nameOv.ac633b8f83
-fullnameOv.ac633b8f83
+nameOverride: ""
+fullnameOverride: ""
 
-serv.ac633b8f83
-  # Specifies whether a serv.ac633b8f83
+serviceAccount: {}
+  # Specifies whether a service account should be created
   # create: true
-  # Automatically mount a Serv.ac633b8f83
+  # Automatically mount a ServiceAccount's API credentials?
   # automount: true
-  # Annotations to add to the serv.ac633b8f83
+  # Annotations to add to the service account
   # annotations: {}
-  # The name of the serv.ac633b8f83
+  # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   # name: ""
 
@@ -39,7 +39,7 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-serv.ac633b8f83
+service:
   type: ClusterIP
   port: 8080
 
@@ -60,10 +60,10 @@ ingress:
   #      - chart-example.local
 
 resources: {}
-  # We usually recommend not to specify default resources and to leav.ac633b8f83
-  # choice for the user. This also increases chances charts run on env.ac633b8f83
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remov.ac633b8f83
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   # limits:
   #   cpu: 100m
   #   memory: 128Mi
@@ -71,7 +71,7 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
-liv.ac633b8f83
+livenessProbe:
   httpGet:
     path: /
     port: http
@@ -87,15 +87,15 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-# Additional v.ac633b8f83
-v.ac633b8f83
+# Additional volumes on the output Deployment definition.
+volumes: []
 # - name: foo
 #   secret:
 #     secretName: mysecret
 #     optional: false
 
-# Additional v.ac633b8f83
-v.ac633b8f83
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
