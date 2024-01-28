@@ -10,6 +10,10 @@ pipeline {
     AWS_REGION = "ap-southeast-3"
     ECR = "183529306899.dkr.ecr.ap-southeast-3.amazonaws.com"
   }
+  parameters {
+      text(name: 'REPO_NAME', defaultValue: 'REPO_NAME', description: 'Type your branch to build')
+      text(name: 'IMAGE_TAG', defaultValue: 'v.0.0.0', description: 'Type version of this service')
+  }
   stages {
     stage('Clone Helm Chart') {
       steps {
