@@ -28,7 +28,8 @@ pipeline {
       steps {
         // git clone the Helm Chart repository
         script {
-          sh 'ls -l'
+          sh "printenv | sort"
+          sh "ls -l"
           sh "sed -i 's/tag: \"\"/tag: \"$IMAGE_TAG\"/g' values_$REPO_NAME.yaml"
           sh "sed -i -r 's|tag: \"v.1.0.0\"|tag: \"$IMAGE_TAG\"|' development/values_$REPO_NAME.yaml"
           sh "git config --global user.name 'Budi Prihantono'"
