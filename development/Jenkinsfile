@@ -22,7 +22,7 @@ pipeline {
       steps {
         // git clone
         script {
-          git credentialsId: 'github', branch: "main", url: 'https://github.com/budiprihantono/k8s_helm_chart.git'
+          git credentialsId: 'github', branch: "origin", url: 'https://github.com/budiprihantono/k8s_helm_chart.git'
           sh 'ls -l'
         }
       }
@@ -34,7 +34,6 @@ pipeline {
       steps {
         // git clone the Helm Chart repository
         script {
-          dir ('development') {
           sh "printenv | sort"
           sh "ls -l"
           sh "sed -i 's/tag: \"\"/tag: \"$IMAGE_TAG\"/g' values_$REPO_NAME.yaml"
@@ -46,7 +45,6 @@ pipeline {
           withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')])
                             {
           sh "git push origin HEAD:origin"
-            }
           }
         }
       }
