@@ -1,0 +1,41 @@
+pipeline {
+  agent {
+    label 'homelab'
+  }
+  options {
+    // Keep last 5 builds logs
+    buildDiscarder(logRotator(numToKeepStr: '5'))
+  }
+  environment {
+    AWS_REGION = "ap-southeast-3"
+    ECR = "183529306899.dkr.ecr.ap-southeast-3.amazonaws.com"
+  }
+  stages {
+    stage('Clone Helm Chart') {
+      steps {
+        // git clone
+        script {
+          git credentialsId: 'github', branch: "main", url: 'https://github.com/budiprihantono/k8s_helm_chart.git'
+          sh 'ls -l'
+        }
+      }
+    }
+    stage('Modify Helms Value') {
+      steps {
+        // git clone the Helm Chart repository
+        script {
+          withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
+          sh 'ls -l'
+          sh "sed -i 's/tag: \"\"/tag: \"$IMAGE_TAG\"/g' values_$REPO_NAME.yaml"
+          sh "sed -i -r 's|tag: \"v.1.0.0\"|tag: \"$IMAGE_TAG\"|' development/values_$REPO_NAME.yaml"
+          sh "git config --global user.name "Budi Prihantono""
+          sh "git config --global user.email "budiprihantono90@gmail.com""
+          sh "git add ."
+          sh "git commit -m "updated the deployment file""
+          sh "git push origin HEAD:main"
+          }
+        }
+      }
+    }
+  }
+}
