@@ -54,6 +54,11 @@ ingress:
       paths:
         - path: /
           pathType: Prefix
+          backend:
+              service:
+                name: golang-hello-world
+                port:
+                  number: 8080
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
