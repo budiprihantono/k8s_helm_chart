@@ -8,7 +8,7 @@ image:
   repository: 183529306899.dkr.ecr.ap-southeast-3.amazonaws.com/golang-hello-world
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v.cf4ea"
+  tag: "v.3fa7c"
 
 imagePullSecrets: []
 nameOverride: ""
